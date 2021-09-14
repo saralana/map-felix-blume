@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Félix Blume Sounds</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link href="style.css" rel="stylesheet" />
+  <!-- Google fonts-->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+  <link rel="shortcut icon" href="https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-07.png?v=1598687497266" />
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- import the webpage's javascript file -->
+    <script src="script.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
+  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css" type="text/css" />
+  
+  
+
+    <style>
+      body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Open Sans', Sans-serif;
+        }
+
+        #map {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          z-index:-1;
+        }
+
+        /* Popup styling */
+
+        .mapboxgl-popup {
+          padding-bottom: 55px;
+        }
+
+        .mapboxgl-popup-close-button {
+          display: none;
+        }
+
+        .mapboxgl-popup-content {
+          font: 400 15px/22px 'Open Sans', 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+          padding: 5px !important;
+          width: 250px;
+        }
+
+
+        .mapboxgl-popup-content h3 {
+          background: rgb(61, 59, 59);
+          text-align: center;
+          color: #fff;
+          margin: 0;
+          display: block;
+          font-weight: 700;
+          margin-top: -5px;
+        }
+
+        .mapboxgl-popup-content h4 {
+          margin: 0;
+          display: block;
+          font-weight: 400;
+        }
+
+        .mapboxgl-container {
+          cursor: pointer;
+        }
+
+        .mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
+          margin-top: 3px;
+        }
+
+        .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
+          border-bottom-color: rgb(61, 59, 59);
+        }
+
+    a.mapboxgl-ctrl-logo{
+      display: none !important;
+    }
+
+    .mapboxgl-ctrl-bottom-right{
+      display: none !important;
+    }
+
+
+    #menu {
+    background: #81b2cc;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+    width: 70px;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+    font-size: 1em;
+    text-transform: UPPERCASE;
+    color: white;
+    display: block;
+    height: 33.33333%;
+    margin: 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+    }
+
+    #menu a:last-child {
+    border: none;
+    }
+
+    #menu a:hover {
+    color: #4282B3;
+    }
+
+    #menu a.active {
+    background-color: #4282B3;
+    color: white;
+    }
+
+    #menu a.active:hover {
+    color: #9AD1D4;
+    }
+
+    #menu p{
+      transform: rotate(90deg);
+    }
+
+
+    #menu img{
+      padding-top: 50%;
+        padding-bottom: 10%;
+    }
+
+
+    @media screen and (max-width: 700px) {
+      #menu a {
+      font-size: 0.8em;
+      }
+      #menu img{
+        padding-top: 0%;
+        padding-bottom: 0%;
+        width: 60%;
+      }
+      #menu{
+        width: 50px;
+        height: 100%;
+      }
+    }
+
+    .topnav{
+      overflow: hidden;
+      background-color: transparent;
+      position: absolute;
+      z-index: 10;
+      text-decoration: UPPERCASE;
+      font-family: 'Open Sans', Sans-serif;
+      font-weight: 900;
+    }
+
+    .topnav a{
+      float: left;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      font-size: 17px;
+      text-transform: UPPERCASE;
+      text-decoration: none;
+    }
+
+    .topnav a:hover{
+      background-color: #transparent;
+      color: #214159;
+    }
+
+    .topnav a.active{
+      background-color: #transparent;
+      color: white;
+    }
+
+    .share{
+      position: absolute;
+      bottom: 0px !important;
+    }
+    </style>  
+  
+  
+  
+</head>
+
+<body>
+
+
+
+
+<nav id="menu"></nav>  
+<div id="map"></div>
+
+
+  
+  <script>
+    var geocoder = new MapboxGeocoder({
+       accessToken: mapboxgl.accessToken,
+       mapboxgl: mapboxgl
+    });
+    
+    var transformRequest = (url, resourceType) => {
+      var isMapboxRequest =
+        url.slice(8, 22) === "api.mapbox.com" ||
+        url.slice(10, 26) === "tiles.mapbox.com";
+      return {
+        url: isMapboxRequest
+          ? url.replace("?", "?pluginName=sheetMapper&")
+          : url
+      };
+    };
+    //YOUR TURN: add your Mapbox token 
+    //mapboxgl.accessToken = 'pk.eyJ1IjoiY2FydG9ncmFmaWFkYXNtZW1vcmlhcyIsImEiOiJjazlxMDN1aG0wZnY4M2xvZHJjajdldnE3In0.qHPWWLN-r8EmzjGLm3afAA'; //Mapbox token 
+   mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYWxnYyIsImEiOiJja2NjbTAyczkwNXA3Mnlscm5nbjN5OHZiIn0.yNcJkPBSugRlIeGkXDRlZw'; //Mapbox token 
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      //style: 'mapbox://styles/saralgc/ckdq5wz7k0vff1iqdsgrh8j5g',
+      style: 'mapbox://styles/saralgc/ckefbbqrf1pwh1aocxqy803lt',
+      center: [0, +20], // starting position
+      zoom: 2.5,// starting zoom
+      transformRequest: transformRequest
+    });
+
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        //YOUR TURN: Replace with csv export link
+        url: 'https://docs.google.com/spreadsheets/d/1cSB7VIMxpFSu21K7Pp649GyB2I6-g8fiI-CMsxZYEaM/gviz/tq?tqx=out:csv&sheet=FieldRecordings',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON(csvData); }
+      });
+      
+      $.ajax({
+        type: "GET",
+        //YOUR TURN: Replace with csv export link
+        url: 'https://docs.google.com/spreadsheets/d/1cSB7VIMxpFSu21K7Pp649GyB2I6-g8fiI-CMsxZYEaM/gviz/tq?tqx=out:csv&sheet=SoundPieces',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON2(csvData); }
+      });
+
+      $.ajax({
+        type: "GET",
+        //YOUR TURN: Replace with csv export link
+        url: 'https://docs.google.com/spreadsheets/d/1cSB7VIMxpFSu21K7Pp649GyB2I6-g8fiI-CMsxZYEaM/gviz/tq?tqx=out:csv&sheet=Video',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON3(csvData); }
+      });
+      
+      
+      function makeGeoJSON(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          
+          map.on('load', function () {
+                        
+            map.loadImage(
+             //'media/gota_wave.png',
+              'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-07.png?v=1598687497266',
+              function(error, image) {
+              if (error) throw error;
+              map.addImage('wave', image);
+            });
+
+            
+            // LAYER SONS DISSO
+            map.addLayer({
+              'id': 'Sounds',
+              'type': 'symbol',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+
+              'layout': {
+                'icon-image': 'wave',
+                'icon-anchor': 'bottom', // point of the icon which will correspond to marker's location
+                "icon-allow-overlap": true,
+                //'icon-size': 0.025
+              }
+            });        
+
+            
+            
+            // When a click event occurs on a feature in the 'Sounds' layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            
+            map.on('click', 'Sounds', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+
+                var description = `<iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/`+e.features[0].properties.Embed +`&color=%23F6AE2D&inverse=false&auto_play=false&show_user=false"></iframe>`;
+
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                //add Popup to map
+
+                new mapboxgl.Popup()
+                  .setLngLat(coordinates)
+                  .setHTML(description)
+                  .addTo(map);
+            });
+          
+          
+            
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'Sounds', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+ 
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+           // FIT BOUNDS
+           // var bbox = turf.bbox(data);
+           // map.fitBounds(bbox, { padding: 50 });
+
+             map.setLayoutProperty('Sounds', 'icon-size', 
+            ['interpolate', ['linear'], ['zoom'],
+               0,
+              //TAMANHO AO ZOOM 0
+              0.09,
+              6,
+              //TAMANHO AO ZOOM 7
+              0.15,
+              15,
+              0.4,
+              24,
+              //TAMANHO AO ZOOM 24
+              0.9
+            ]);
+            
+          });
+
+        });
+      };
+      
+      
+      
+      function makeGeoJSON2(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          
+          map.on('load', function () {
+                        
+            
+            map.loadImage(
+             //'media/gota_phone_baixa.png',
+              'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-08.png?v=1598687498799',
+              function(error, image) {
+              if (error) throw error;
+              map.addImage('soundpiece', image);
+            });
+            
+
+            //LAYER SONS DAQUILO
+            map.addLayer({
+              'id': 'Sound Pieces',
+              'type': 'symbol',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+
+              'layout': {
+                'icon-image': 'soundpiece',
+                'icon-anchor': 'bottom', // point of the icon which will correspond to marker's location
+                "icon-allow-overlap": true,
+                //'icon-size': 0.025
+              }
+            });
+                   
+            
+            map.on('click', 'Sound Pieces', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                  
+                var description = `<iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/`+ e.features[0].properties.Embed +`&color=%239AD1D4&inverse=false&auto_play=false&show_user=false"></iframe>`;
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                //add Popup to map
+
+                new mapboxgl.Popup()
+                  .setLngLat(coordinates)
+                  .setHTML(description)
+                  .addTo(map);
+            });
+            
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'Sound Pieces', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+ 
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+           // FIT BOUNDS
+           // var bbox = turf.bbox(data);
+           // map.fitBounds(bbox, { padding: 50 });
+
+        
+            map.setLayoutProperty('Sound Pieces', 'icon-size', 
+            ['interpolate', ['linear'], ['zoom'],
+                0,
+              //TAMANHO AO ZOOM 0
+              0.09,
+              6,
+              //TAMANHO AO ZOOM 7
+              0.15,
+              15,
+              0.4,
+              24,
+              //TAMANHO AO ZOOM 24
+              0.9
+            ]);
+            
+          });
+
+        });
+      };
+      
+      
+      function makeGeoJSON3(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          
+          map.on('load', function () {
+                        
+            map.loadImage(
+             //'media/play_baixa.png',
+              'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-09.png?v=1598687497908',
+              function(error, image) {
+              if (error) throw error;
+              map.addImage('play', image);
+            });
+
+            
+            // LAYER SONS DISSO
+            map.addLayer({
+              'id': 'Videos',
+              'type': 'symbol',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+              'layout': {
+                'icon-image': 'play',
+                'icon-anchor': 'bottom', // point of the icon which will correspond to marker's location
+                "icon-allow-overlap": true,
+                //'icon-size': 0.025
+              }
+            });        
+
+            
+            
+              // When a click event occurs on a feature in the 'Video' layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            
+            map.on('click', 'Videos', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice();
+
+                var description = `<iframe src="https://player.vimeo.com/video/`+e.features[0].properties.Embed +`?portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                //add Popup to map
+
+                new mapboxgl.Popup()
+                  .setLngLat(coordinates)
+                  .setHTML(description)
+                  .addTo(map);
+            });
+          
+          
+            
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'Videos', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+ 
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+           // FIT BOUNDS
+           // var bbox = turf.bbox(data);
+           // map.fitBounds(bbox, { padding: 50 });
+
+             map.setLayoutProperty('Videos', 'icon-size', 
+            ['interpolate', ['linear'], ['zoom'],
+              0,
+              //TAMANHO AO ZOOM 0
+              0.09,
+              6,
+              //TAMANHO AO ZOOM 7
+              0.15,
+              15,
+              0.4,
+              24,
+              //TAMANHO AO ZOOM 24
+              0.9
+            ]);
+            
+          });
+
+        });
+      };
+      
+      
+    });
+    
+
+      // enumerate ids of the layers
+      var toggleableLayerIds = ['Sound Pieces', 'Sounds', 'Videos'];
+      var banner = ['https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-08.png?v=1598687498799', 'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-07.png?v=1598687497266', 'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2FCo%CC%81pia%20de%20novaslogos2-09.png?v=1598687497908'];
+
+            // set up the corresponding toggle button for each layer
+            for (var i = 0; i < toggleableLayerIds.length; i++) {
+                var id = toggleableLayerIds[i];
+                 var img = document.createElement('img');
+                 img.src = banner[i];
+                 img.width = "50";
+                 var check = document.createElement('img');
+                 check.src = 'https://cdn.glitch.com/9961826d-8fe5-4bb6-9bcf-a08c87d820d0%2Fcheck_claro-11.png?v=1599071822895';  
+                 check.width = "25";  
+                 var title = document.createElement('p');
+                 title.textContent = id;
+                 var link = document.createElement('a');
+                 link.href = '#';
+                 link.className = 'active';
+                 link.appendChild(check);
+                 link.appendChild(img);
+                 link.appendChild(title);
+                 
+ 
+                link.onclick = function(e) {
+                  var clickedLayer = this.textContent;
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+                    // toggle layer visibility by changing the layout object's visibility property
+                    if (visibility === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                        this.className = '';
+                    } else {
+                        this.className = 'active';
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                    }
+                };
+
+                var layers = document.getElementById('menu');
+                layers.appendChild(link);
+            }
+
+      // ZOOM
+      // map.addControl(new mapboxgl.NavigationControl(), 'top-left');      
+    
+  </script>
+  
+<script>
+  
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+  
+</script>
+
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+  
+
+<div class="topnav" style="margin: 50px;">
+  <a href="http://www.felixblume.com/news/">News</a>
+  <a href="http://www.felixblume.com/category/selected-works/">Selected</a>
+  <a href="http://www.felixblume.com/category/personal-works/">All</a>
+  <a href="http://www.felixblume.com/category/sound-pieces/">Sound Pieces</a>
+  <a href="http://www.felixblume.com/category/sound-library/">Sound Library</a>
+  <a href="http://www.felixblume.com/category/press/">Info</a>
+  <a href="http://www.felixblume.com/bio/">Bio</a>
+</div> 
+  
+<div class="share">
+  <a href="https://twitter.com/intent/tweet&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-size="large" data-text="@felixblume #SoundMap http://felixblume.com" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+</body>
+
+  
+</html>
